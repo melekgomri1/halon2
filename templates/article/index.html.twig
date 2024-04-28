@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Articles{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Liste des Articles</h1>
+
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Contenu</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.content }}</td>
+                    <td>{{ article.creationDate ? article.creationDate|date('Y-m-d') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary btn-sm">Voir</a>
+                        <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-secondary btn-sm">Éditer</a>
+                        <a href="{{ path('app_article_delete', {'id': article.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">Supprimer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucun article trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_article_new') }}" class="btn btn-success">Créer un nouvel article</a>
+    </div>
+{% endblock %}
